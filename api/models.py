@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 import uuid
 
@@ -27,7 +28,7 @@ class UserModel(models.Model):
 
     def save(self, *args, **kwargs):
         """
-        Cria uuid e token
+        Cria username
         """
         self.username = str(self.cpf)
         super(UserModel, self).save(*args, **kwargs)

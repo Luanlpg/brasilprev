@@ -58,3 +58,25 @@ class UserDetailView(APIView):
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ExtractDetailView(APIView):
+    """
+    View que mostra e apaga extrato.
+    """
+    serializer_class = ExtractSerializer
+
+    def get_transitions(self, account):
+        try:
+            return AccountModel.objects.get(account=account)
+        except AccountModel.DoesNotExist:
+            raise Http404
+
+    def get(self, request, account, format=None):
+        extract = self.get_transitions(account)
+        serializer = self.serializer_class(extract)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, account, format=None):
+        # não vejo de delete
+        return Response('{"message": "success"}', status=status.HTTP_204_NO_CONTENT)
