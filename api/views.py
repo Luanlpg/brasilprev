@@ -2,7 +2,11 @@ from django.shortcuts import render
 
 from .serializer import UserSerializer
 
+from .serializer import AccountSerializer
+
 from .models import UserModel
+
+from .models import AccountModel
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -58,3 +62,32 @@ class UserDetailView(APIView):
 
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class AccountView(APIView):
+    """=========================================================================\n
+    View que mostra, altera e apaga conta.\n
+    ========================================================================="""
+
+    serializer_class = AccountSerializer
+    # permission_classes = [IsAuthenticated]
+
+    def post(self, format=None, requests):
+        serializer = self.serializer_class(data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response('{ message: "success" }', status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def get_account(self, id):
+        try:
+            return UserModel.objects.get(cpf=cpf)
+        except UserModel.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        account = self.get_account(id)
+        serializer = self.serializer_class(account)
+        return Response(serializer.data, status=status.HTTP_200_OK)
