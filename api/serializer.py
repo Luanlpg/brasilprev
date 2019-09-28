@@ -28,7 +28,7 @@ class UserSerializer(serializers.ModelSerializer):
             'rua'
             ]
 
-class UserSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     """
     Serializador de clientes.
     """
