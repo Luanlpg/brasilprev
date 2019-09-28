@@ -36,13 +36,12 @@ class UserModel(models.Model):
 
 class AccountModel(models.Model):
     cpf = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    id = models.IntegerField(unique=True)
     saldo = models.FloatField(null=True)
 
 
 
-class Extract(models.Model):
-    conta = models.ForeignKey(AccountModel)
+class ExtractModel(models.Model):
+    conta = models.ForeignKey(AccountModel, on_delete=models.PROTECT)
     data = models.CharField(max_length=30)
     descricao = models.CharField(max_length=255, null=True)
     valor = models.FloatField()
