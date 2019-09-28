@@ -13,5 +13,18 @@ class UserSerializer(serializers.ModelSerializer):
             'username',
             'first_name',
             'last_name',
-            'email'
+            'email',
+            'is_active',
+            'date_joined',
+            'token',
+            'cpf',
+            'city',
+            'district',
+            'complement',
+            'date_of_birth',
+            'state',
+            'number',
+            'country',
+            'password',
+            'street'
             ]
