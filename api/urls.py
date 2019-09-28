@@ -12,8 +12,9 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('login/', obtain_jwt_token),
+    path('auth/', obtain_jwt_token),
     path('refresh-token/', refresh_jwt_token),
+    path('login/', views.LoginView.as_view()),
     path('user/', views.UserListView.as_view()),
     path('user/<str:cpf>/', views.UserDetailView.as_view())
 ]

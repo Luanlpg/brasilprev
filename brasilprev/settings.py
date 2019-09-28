@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
     'api',
 ]
 
@@ -111,6 +113,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
+
+REST_USE_JWT = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.hashers import make_password
 
 from .serializer import UserSerializer
 from .serializer import AccountSerializer
@@ -15,6 +16,21 @@ from rest_framework.permissions import IsAuthenticated
 import time
 import requests
 import json
+
+
+class LoginView(APIView):
+    """=========================================================================\n
+    View que loga.\n
+    ========================================================================="""
+    def post(self, request, format=None):
+        token = requests.post('http://localhost:8000/api/auth/', {
+                "username": str(request.data["cpf"]),
+                "password": make_password(request.data["password"])
+        })
+        if token:
+            return Response(token, status=status.HTTP_201_CREATED)
+        return Response('{"error": "string", "message": "string"}', status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserListView(APIView):
     """=========================================================================\n
