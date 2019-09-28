@@ -2,8 +2,6 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-import uuid
-
 
 class UserModel(models.Model):
     """=========================================================================
@@ -21,8 +19,9 @@ class UserModel(models.Model):
     complemento = models.CharField(max_length=150, null=True)
     dataNascimento = models.CharField(max_length=150, null=False)
     estado = models.CharField(max_length=100, null=True)
-    numero = models.IntegerField(null=True)
     cidade = models.CharField(max_length=100, null=True)
+    pais = models.CharField(max_length=100, null=True)
+    numero = models.IntegerField(null=True)
     password = models.CharField(max_length=150, null=False)
     rua = models.CharField(max_length=150, null=True)
 
@@ -31,6 +30,12 @@ class UserModel(models.Model):
         Cria username
         """
         self.username = str(self.cpf)
+        User.objects.create(
+            username = self.username,
+            email = self.email,
+            first_name = self.nome,
+            last_name = self.sobrenome
+        )
         super(UserModel, self).save(*args, **kwargs)
 
 

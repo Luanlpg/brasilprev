@@ -67,6 +67,7 @@ class ExtractDetailView(APIView):
     View que mostra e apaga extrato.
     """
     serializer_class = ExtractSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_account(self, account):
         try:
@@ -89,6 +90,7 @@ class ExtractView(APIView):
     View que lista e cadastra extrato.\n
     ========================================================================="""
     serializer_class = ExtractSerializer
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
@@ -105,7 +107,7 @@ class AccountView(APIView):
     ========================================================================="""
 
     serializer_class = AccountSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, requests, format=None):
         serializer = self.serializer_class(data=requests.data)
