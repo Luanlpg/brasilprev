@@ -2,6 +2,8 @@ from rest_framework import serializers
 
 from .models import UserModel
 
+from .models import AccountModel
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializador de clientes.
@@ -11,20 +13,30 @@ class UserSerializer(serializers.ModelSerializer):
         depth = 1
         fields = [
             'username',
-            'first_name',
-            'last_name',
+            'nome',
+            'sobrenome',
             'email',
-            'is_active',
-            'date_joined',
-            'token',
             'cpf',
-            'city',
-            'district',
-            'complement',
-            'date_of_birth',
-            'state',
-            'number',
-            'country',
+            'cidade',
+            'bairro',
+            'complemento',
+            'dataNascimento',
+            'estado',
+            'numero',
+            'pais',
             'password',
-            'street'
+            'rua'
+            ]
+
+class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializador de clientes.
+    """
+    class Meta:
+        model = UserModel
+        depth = 1
+        fields = [
+            'cpf',
+            'id',
+            'saldo'
             ]
