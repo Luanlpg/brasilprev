@@ -1,11 +1,10 @@
 from django.shortcuts import render
 
 from .serializer import UserSerializer
-
 from .serializer import AccountSerializer
+from .serializer import ExtractSerializer
 
 from .models import UserModel
-
 from .models import AccountModel
 
 from rest_framework.response import Response
@@ -63,6 +62,44 @@ class UserDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class ExtractDetailView(APIView):
+    """
+    View que mostra e apaga extrato.
+    """
+    serializer_class = ExtractSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_account(self, account):
+        try:
+            return AccountModel.objects.get(account=account)
+        except AccountModel.DoesNotExist:
+            raise Http404
+
+    def get(self, request, account, format=None):
+        serializer = self.serializer_class(ExtractModel.objects.filter(conta=account), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, account, format=None):
+        extract = self.get_account(account)
+        extract.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ExtractView(APIView):
+    """=========================================================================\n
+    View que lista e cadastra extrato.\n
+    ========================================================================="""
+    serializer_class = ExtractSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class AccountView(APIView):
     """=========================================================================\n
@@ -70,7 +107,7 @@ class AccountView(APIView):
     ========================================================================="""
 
     serializer_class = AccountSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, requests, format=None):
         serializer = self.serializer_class(data=requests.data)
