@@ -40,13 +40,8 @@ class AccountModel(models.Model):
 
 
 
-<<<<<<< HEAD
 class ExtractModel(models.Model):
     conta = models.ForeignKey(AccountModel, on_delete=models.PROTECT)
-=======
-class Extract(models.Model):
-    conta = models.ForeignKey(AccountModel,on_delete=models.PROTECT)
->>>>>>> 6eb3ac129bd6282a6a454e8ae75e0cc7b4122cf8
     data = models.CharField(max_length=30)
     descricao = models.CharField(max_length=255, null=True)
     valor = models.FloatField()
