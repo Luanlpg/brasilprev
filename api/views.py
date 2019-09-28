@@ -7,7 +7,7 @@ from .models import UserModel
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.views import status
-from rest_framework import viewsets, permissions
+from rest_framework.permissions import IsAuthenticated
 
 import time
 import requests
@@ -19,7 +19,7 @@ class UserListView(APIView):
     ========================================================================="""
     serializer_class = UserSerializer
 
-    def get(self, request, cpf, format=None):
+    def get(self, request, format=None):
         serializer = self.serializer_class(UserModel.objects.all(), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -37,6 +37,7 @@ class UserDetailView(APIView):
     View que mostra, altera e apaga user.\n
     ========================================================================="""
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_user(self, cpf):
         try:
