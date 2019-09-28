@@ -12,9 +12,12 @@ from rest_framework.views import APIView
 from rest_framework.views import status
 from rest_framework.permissions import IsAuthenticated
 
+from pycpfcnpj import cpfcnpj
+
 import time
 import requests
 import json
+import re
 
 class UserListView(APIView):
     """=========================================================================\n
@@ -26,7 +29,21 @@ class UserListView(APIView):
         serializer = self.serializer_class(UserModel.objects.all(), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def check_email(self, email):
+        check = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+
+        if check == None:
+            return False
+
+        return True           
+
     def post(self, request, format=None):
+        if not self.check_email(request.data['email']):
+            return Response('{ message: "Email is not valid" }', status=status.HTTP_400_BAD_REQUEST)
+
+        if not cpfcnpj.validate(request.data['cpf']):
+            return Response('{ message: "CPF is not valid" }', status=status.HTTP_400_BAD_REQUEST)
+
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             serializer.save()
