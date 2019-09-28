@@ -12,7 +12,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = UserModel
         depth = 1
         fields = [
-            'username',
             'nome',
             'sobrenome',
             'email',

@@ -10,7 +10,6 @@ class UserModel(models.Model):
     Model de Usuário.
     ========================================================================="""
     cpf = models.IntegerField(primary_key=True)
-    username = models.CharField(max_length=60, unique=True, null=True)
     nome = models.CharField(max_length=40, null=False)
     sobrenome = models.CharField(max_length=40, null=False)
     email = models.EmailField(max_length=300, unique=True, null=False)
@@ -26,20 +25,6 @@ class UserModel(models.Model):
     numero = models.IntegerField(null=True)
     password = models.CharField(max_length=150, null=False)
     rua = models.CharField(max_length=150, null=True)
-
-    def save(self, *args, **kwargs):
-        """
-        Cria username
-        """
-        self.username = str(self.cpf)
-        User.objects.create(
-            username = self.username,
-            email = self.email,
-            first_name = self.nome,
-            last_name = self.sobrenome
-        )
-        super(UserModel, self).save(*args, **kwargs)
-
 
 class AccountModel(models.Model):
     cpf = models.ForeignKey(UserModel, on_delete=models.CASCADE)
