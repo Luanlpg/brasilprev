@@ -107,7 +107,11 @@ class AccountView(APIView):
     serializer_class = AccountSerializer
     # permission_classes = [IsAuthenticated]
 
+<<<<<<< HEAD
     def post(self, requests, format=None):
+=======
+    def post(self, requests,format=None):
+>>>>>>> 6eb3ac129bd6282a6a454e8ae75e0cc7b4122cf8
         serializer = self.serializer_class(data=requests.data)
         if serializer.is_valid():
             serializer.save()
