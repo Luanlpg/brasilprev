@@ -63,8 +63,6 @@ class UserDetailView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-<<<<<<< HEAD
 class ExtractDetailView(APIView):
     """
     View que mostra e apaga extrato.
@@ -85,7 +83,8 @@ class ExtractDetailView(APIView):
     def delete(self, request, account, format=None):
         # não vejo de delete
         return Response('{"message": "success"}', status=status.HTTP_204_NO_CONTENT)
-=======
+
+
 class AccountView(APIView):
     """=========================================================================\n
     View que mostra, altera e apaga conta.\n
@@ -113,4 +112,3 @@ class AccountView(APIView):
         account = self.get_account(id)
         serializer = self.serializer_class(account)
         return Response(serializer.data, status=status.HTTP_200_OK)
->>>>>>> d65cf05c24d0c83c6ef1e9566737198d3ef78967
