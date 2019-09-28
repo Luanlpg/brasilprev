@@ -15,5 +15,9 @@ urlpatterns = [
     path('login/', obtain_jwt_token),
     path('refresh-token/', refresh_jwt_token),
     path('user/', views.UserListView.as_view()),
+    path('account/', views.AccountView.as_view()),
+    path('account/adicionarSaldo/', views.AddSaldoView.as_view()),
+    path('account/<int:id>', views.AccountDetailView.as_view()),
+    path('transferir/', views.TransferView.as_view()),
     path('user/<str:cpf>/', views.UserDetailView.as_view())
 ]

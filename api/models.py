@@ -35,20 +35,19 @@ class UserModel(models.Model):
 
 class AccountModel(models.Model):
     cpf = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-    id = models.IntegerField(unique=True)
+    id = models.IntegerField(unique=True, primary_key=True)
     saldo = models.FloatField(null=True)
 
 
 
 class Extract(models.Model):
-    conta = models.ForeignKey(AccountModel)
+    conta = models.ForeignKey(AccountModel, on_delete=models.PROTECT)
     data = models.CharField(max_length=30)
     descricao = models.CharField(max_length=255, null=True)
     valor = models.FloatField()
 
 
-class TransactionModel(models.Model):
+class TransferModel(models.Model):
     contaDestino = models.ForeignKey(AccountModel, on_delete=models.PROTECT, related_name='origin')
     contaOrigin = models.ForeignKey(AccountModel, on_delete=models.PROTECT, related_name='destiny', null=True)
-    type_transactions = models.CharField(max_length=30)
     valor = models.FloatField()
